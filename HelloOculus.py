@@ -5,10 +5,18 @@ from direct.task import Task
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Sequence
 from panda3d.core import Point3
+from direct.filter.FilterManager import FilterManager
+from panda3d.core import Texture
+from panda3d.core import Shader
  
 class MyApp(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
+        manager = FilterManager(base.win, base.cam)
+        tex = Texture()
+        quad = manager.renderSceneInto(colortex=tex)
+        quad.setShader(Shader.load("myfilter.sha"))
+        quad.setShaderInput("tex", tex)
  
         # Disable the camera trackball controls.
         self.disableMouse()
